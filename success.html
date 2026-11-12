@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>পেমেন্ট যাচাই</title>
+<style>body{font-family:system-ui,'Hind Siliguri',sans-serif;max-width:480px;margin:15vh auto;padding:0 20px;text-align:center;line-height:1.7}
+a.b{display:inline-block;background:#0b4f3a;color:#fff;padding:14px 22px;border-radius:10px;text-decoration:none;font-weight:600}</style></head>
+<body><h2 id="t">পেমেন্ট যাচাই করা হচ্ছে...</h2><p id="m"></p><div id="a"></div>
+<script>
+var id=new URLSearchParams(location.search).get("invoice_id");
+fetch("/api/verify?invoice_id="+encodeURIComponent(id||"")).then(r=>r.json()).then(function(d){
+  if(d.ok){t.textContent="পেমেন্ট সফল হয়েছে ✅";m.textContent="নিচের বাটনে চাপ দিয়ে কোর্সে ঢুকুন। লিংকটি সেভ করে রাখুন।";
+    a.innerHTML='<a class="b" href="'+d.courseUrl+'">কোর্স শুরু করুন</a>';}
+  else{t.textContent="পেমেন্ট নিশ্চিত হয়নি";m.textContent="টাকা কাটা হয়ে থাকলে সাপোর্টে ইনভয়েস আইডি সহ যোগাযোগ করুন।";}
+}).catch(function(){t.textContent="যাচাই করা যায়নি";m.textContent="একটু পরে পেজ রিফ্রেশ করুন।"});
+</script></body></html>
